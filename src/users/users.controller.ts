@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { LoginUserDto, SignUpUserDto } from './dto/users.dto';
+import { Public } from 'src/utils/public.guard';
+import { AuthGuard } from 'src/utils/auth.guard';
 
 @Controller({
   path: 'users',
@@ -9,11 +11,13 @@ import { LoginUserDto, SignUpUserDto } from './dto/users.dto';
 export class UsersController {
   constructor(private readonly _userService: UsersService) {}
 
+  @Public()
   @Post('/signup')
   async signUp(@Body() signUpUserDto: SignUpUserDto) {
     return await this._userService.signUp(signUpUserDto);
   }
 
+  @Public()
   @Post('/login')
   async login(@Body() loginUserDto: LoginUserDto) {
     return await this._userService.login(loginUserDto);

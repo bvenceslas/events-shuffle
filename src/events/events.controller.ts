@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { EventsDto } from './dto/events.create-or-update.dto';
 import { VoteEventDto } from './dto/events.vote.dto';
+import { Public } from 'src/utils/public.guard';
 
 @Controller({
   path: 'event',
@@ -15,16 +16,19 @@ export class EventsController {
     return await this._eventsService.create(createEventDto);
   }
 
+  @Public()
   @Get()
   async getAllEvents() {
     return await this._eventsService.findAll();
   }
 
+  @Public()
   @Get(':id')
   async getEventById(@Param('id') eventId: string) {
     return await this._eventsService.findOneById(eventId);
   }
 
+  @Public()
   @Get('/name/:name')
   async getEventByName(@Param('name') eventName: string) {
     return await this._eventsService.findOneByName(eventName);
