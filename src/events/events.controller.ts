@@ -8,40 +8,40 @@ import { VoteEventDto } from './dto/events.vote.dto';
   version: 'v1',
 })
 export class EventsController {
-  constructor(private readonly eventsService: EventsService) {}
+  constructor(private readonly _eventsService: EventsService) {}
 
   @Post()
   async createEvent(@Body() createEventDto: EventsDto) {
-    return await this.eventsService.create(createEventDto);
+    return await this._eventsService.create(createEventDto);
   }
 
   @Get()
   async getAllEvents() {
-    return await this.eventsService.findAll();
+    return await this._eventsService.findAll();
   }
 
   @Get(':id')
   async getEventById(@Param('id') eventId: string) {
-    return await this.eventsService.findOneById(eventId);
+    return await this._eventsService.findOneById(eventId);
   }
 
   @Get('/name/:name')
   async getEventByName(@Param('name') eventName: string) {
-    return await this.eventsService.findOneByName(eventName);
+    return await this._eventsService.findOneByName(eventName);
   }
 
   @Get(':id/results')
   async getSuitableDates(@Param('id') eventId: string) {
-    return await this.eventsService.findSuitableDates(eventId);
+    return await this._eventsService.findSuitableDates(eventId);
   }
 
   @Put(':id')
   async updateEvent(@Param('id') eventId: string, @Body() data: EventsDto) {
-    return await this.eventsService.update(eventId, data);
+    return await this._eventsService.update(eventId, data);
   }
 
   @Put(':id/vote')
   async voteEvent(@Param('id') eventId: string, @Body() data: VoteEventDto) {
-    return await this.eventsService.createVote(eventId, data);
+    return await this._eventsService.createVote(eventId, data);
   }
 }

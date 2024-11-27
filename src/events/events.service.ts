@@ -9,13 +9,14 @@ import { Events } from './models/events.model';
 import { Model } from 'mongoose';
 import { EventsDto } from './dto/events.create-or-update.dto';
 import { VoteEventDto } from './dto/events.vote.dto';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class EventsService {
   constructor(
     @InjectModel(Events.name)
-    private readonly eventModel: Model<Events>,
-    // private readonly userService: UserService,
+    private readonly _eventModel: Model<Events>,
+    private readonly _userService: UsersService,
   ) {}
 
   async create(createEventDto: EventsDto) {
@@ -29,14 +30,14 @@ export class EventsService {
       );
     }
 
-    const newEvent = new this.eventModel(createEventDto);
+    const newEvent = new this._eventModel(createEventDto);
     newEvent.votes = [];
     const createdEvent = await newEvent.save();
     return createdEvent._id;
   }
 
   async findAll() {
-    const allEvents = await this.eventModel
+    const allEvents = await this._eventModel
       .find({}, { dates: 0, __v: 0 })
       .exec();
 
@@ -44,11 +45,11 @@ export class EventsService {
   }
 
   async findOneById(eventId: string) {
-    return await this.eventModel.findOne({ _id: eventId }).lean();
+    return await this._eventModel.findOne({ _id: eventId }).lean();
   }
 
   async findOneByName(eventName: string) {
-    return await this.eventModel.findOne({ name: eventName }).lean();
+    return await this._eventModel.findOne({ name: eventName }).lean();
   }
 
   async findSuitableDates(eventId: string) {
@@ -87,7 +88,7 @@ export class EventsService {
       throw new NotFoundException(`Event with id ${eventId} not found!`);
     }
 
-    const updatedEvent = await this.eventModel.findByIdAndUpdate(
+    const updatedEvent = await this._eventModel.findByIdAndUpdate(
       eventId,
       {
         ...eventData,
@@ -112,15 +113,11 @@ export class EventsService {
 
     // check if the username exists
     const { username, votingDates } = eventData;
-    // TODO: to be created
-    // const foundUser =
-    //   await this.userService.findOneByName(username);
+    const foundUser = await this._userService.findOne(username);
 
-    // if (!foundUser) {
-    //   throw new NotFoundException(
-    //     `User with name: ${username} not found`,
-    //   );
-    // }
+    if (!foundUser) {
+      throw new NotFoundException(`User ${username} not found`);
+    }
 
     // get the event vote
     const votes = foundEvent.votes || [];
