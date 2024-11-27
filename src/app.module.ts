@@ -4,11 +4,14 @@ import { AppService } from './app.service';
 import { EventsModule } from './events/events.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { UsersModule } from './users/users.module';
+import config from './config/configuration';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      load: [config],
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -18,6 +21,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       }),
     }),
     EventsModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
