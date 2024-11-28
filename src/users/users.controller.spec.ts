@@ -12,26 +12,24 @@ jest.mock('bcrypt', () => ({
   compare: jest.fn().mockResolvedValue(true),
 }));
 
+export const mockUsersService = {
+  signUp: jest.fn().mockImplementation(async (signUpUserDto: SignUpUserDto) => {
+    if (signUpUserDto.username === 'test') {
+      throw new ConflictException(
+        'Username test taken, please use another one',
+      );
+    }
+    return { _id: '1', username: signUpUserDto.username };
+  }),
+  login: jest.fn().mockResolvedValue({ accessToken: 'mockedToken' }),
+  findAll: jest.fn().mockResolvedValue([{ _id: '1', username: 'test' }]),
+  findOneById: jest.fn().mockResolvedValue({ _id: '1', username: 'test' }),
+  findOne: jest.fn().mockResolvedValue({ _id: '1', username: 'test' }),
+};
+
 describe('UsersController', () => {
   let usersController: UsersController;
   let usersService: UsersService;
-
-  const mockUsersService = {
-    signUp: jest
-      .fn()
-      .mockImplementation(async (signUpUserDto: SignUpUserDto) => {
-        if (signUpUserDto.username === 'test') {
-          throw new ConflictException(
-            'Username test taken, please use another one',
-          );
-        }
-        return { _id: '1', username: signUpUserDto.username };
-      }),
-    login: jest.fn().mockResolvedValue({ accessToken: 'mockedToken' }),
-    findAll: jest.fn().mockResolvedValue([{ _id: '1', username: 'test' }]),
-    findOneById: jest.fn().mockResolvedValue({ _id: '1', username: 'test' }),
-    findOne: jest.fn().mockResolvedValue({ _id: '1', username: 'test' }),
-  };
 
   const mockUserModel = {
     findOne: jest.fn().mockResolvedValue({ _id: '1', username: 'test' }),
