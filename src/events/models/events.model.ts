@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument, Mongoose, Types } from 'mongoose';
+import { User } from 'src/users/models/users.model';
 
 export type TypeVote = {
   date: Date;
@@ -36,6 +37,12 @@ export class Events {
 
   @Prop({ type: [VoteSchema], required: false })
   votes: TypeVote[] | null;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: User.name,
+  })
+  creator: User | null;
 }
 
 export const EventsSchema = SchemaFactory.createForClass(Events);

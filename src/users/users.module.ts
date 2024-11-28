@@ -16,7 +16,7 @@ import { APP_GUARD } from '@nestjs/core/constants';
       global: true,
       useFactory: (configService: ConfigService) => ({
         secret: configService.get('jwtSecret'),
-        signOptions: { expiresIn: '1h' },
+        signOptions: { expiresIn: '3600s' },
       }),
     }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),

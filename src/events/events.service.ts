@@ -10,6 +10,7 @@ import { Model } from 'mongoose';
 import { EventsDto } from './dto/events.create-or-update.dto';
 import { VoteEventDto } from './dto/events.vote.dto';
 import { UsersService } from 'src/users/users.service';
+import { processEventData } from 'src/utils/date.process';
 
 @Injectable()
 export class EventsService {
@@ -19,8 +20,10 @@ export class EventsService {
     private readonly _userService: UsersService,
   ) {}
 
-  async create(createEventDto: EventsDto) {
+  async create(createEventDto: EventsDto, req: any) {
     // handle duplicated events
+    const username = req.user.username;
+
     const eventName = createEventDto.name.trim();
     const duplicatedEvent = await this.findOneByName(eventName);
 
@@ -30,15 +33,23 @@ export class EventsService {
       );
     }
 
-    const newEvent = new this._eventModel(createEventDto);
+    let foundCreator;
+    if (username) {
+      foundCreator = await this._userService.findOne(username);
+    }
+
+    const processedEventData = processEventData(createEventDto);
+    const newEvent = new this._eventModel(processedEventData);
+    newEvent.creator = foundCreator._id;
     newEvent.votes = [];
     const createdEvent = await newEvent.save();
-    return createdEvent._id;
+    return { id: createdEvent._id };
   }
 
   async findAll() {
     const allEvents = await this._eventModel
       .find({}, { dates: 0, __v: 0 })
+      .populate('creator', 'username')
       .exec();
 
     return allEvents;
@@ -88,10 +99,11 @@ export class EventsService {
       throw new NotFoundException(`Event with id ${eventId} not found!`);
     }
 
+    const processedEventData = processEventData(eventData); // Process the event data
     const updatedEvent = await this._eventModel.findByIdAndUpdate(
       eventId,
       {
-        ...eventData,
+        ...processedEventData,
       },
       { new: true },
     );
@@ -103,7 +115,7 @@ export class EventsService {
     return updatedEvent;
   }
 
-  async createVote(eventId: string, eventData: VoteEventDto) {
+  async createVote(eventId: string, eventData: VoteEventDto, req: any) {
     // check if the event exists
     const foundEvent = await this.findOneById(eventId);
 
@@ -111,16 +123,18 @@ export class EventsService {
       throw new NotFoundException(`Event with id: ${eventId} not found!`);
     }
 
-    // check if the username exists
-    const { username, votingDates } = eventData;
+    // check if the user exists
+    const username = req.user.username;
     const foundUser = await this._userService.findOne(username);
 
     if (!foundUser) {
-      throw new NotFoundException(`User ${username} not found`);
+      throw new NotFoundException(`User with username: ${username} not found`);
     }
 
     // get the event vote
     const votes = foundEvent.votes || [];
+
+    const { votingDates } = eventData;
 
     // check voting dates
     votingDates.forEach(async (votingDate) => {
@@ -148,7 +162,7 @@ export class EventsService {
           existingVote.people.push(username);
         }
 
-        // else skipping...
+        // else just skipping...
       } else {
         votes.push({
           date: votingDateObj,
@@ -157,7 +171,6 @@ export class EventsService {
       }
 
       // update the event with the constituted array
-
       await this.update(eventId, {
         ...foundEvent,
         votes,
@@ -168,9 +181,7 @@ export class EventsService {
     const foundUpdatedEvent = await this.findOneById(eventId);
 
     if (!foundEvent) {
-      throw new NotFoundException(
-        `Updated event with id: ${eventId} not found!`,
-      );
+      throw new NotFoundException(`Event with id: ${eventId} not found!`);
     }
 
     return foundUpdatedEvent;

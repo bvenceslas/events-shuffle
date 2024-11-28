@@ -7,12 +7,7 @@ import { UsersModule } from 'src/users/users.module';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      {
-        name: Events.name,
-        schema: EventsSchema,
-      },
-    ]),
+    MongooseModule.forFeature([{ name: Events.name, schema: EventsSchema }]),
     UsersModule,
   ],
   controllers: [EventsController],

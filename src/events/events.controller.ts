@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Req } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { EventsDto } from './dto/events.create-or-update.dto';
 import { VoteEventDto } from './dto/events.vote.dto';
 import { Public } from 'src/utils/public.guard';
+import { processEventData } from 'src/utils/date.process';
 
 @Controller({
   path: 'event',
@@ -12,12 +13,15 @@ export class EventsController {
   constructor(private readonly _eventsService: EventsService) {}
 
   @Post()
-  async createEvent(@Body() createEventDto: EventsDto) {
-    return await this._eventsService.create(createEventDto);
+  async createEvent(@Body() createEventDto: EventsDto, @Req() req) {
+    return await this._eventsService.create(
+      processEventData(createEventDto),
+      req,
+    );
   }
 
   @Public()
-  @Get()
+  @Get('list')
   async getAllEvents() {
     return await this._eventsService.findAll();
   }
@@ -45,7 +49,11 @@ export class EventsController {
   }
 
   @Put(':id/vote')
-  async voteEvent(@Param('id') eventId: string, @Body() data: VoteEventDto) {
-    return await this._eventsService.createVote(eventId, data);
+  async voteEvent(
+    @Param('id') eventId: string,
+    @Body() data: VoteEventDto,
+    @Req() req,
+  ) {
+    return await this._eventsService.createVote(eventId, data, req);
   }
 }

@@ -92,7 +92,7 @@ export class UsersService {
   }
 
   async findOne(username: string): Promise<User | undefined> {
-    return await this._userModel.findOne({ username }).lean();
+    return await this._userModel.findOne({ username });
   }
 
   async findAll(): Promise<User[]> {
