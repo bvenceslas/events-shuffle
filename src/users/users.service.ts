@@ -10,7 +10,6 @@ import { Model } from 'mongoose';
 import { User } from './models/users.model';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
-import { saltRounds } from 'src/constants';
 import { SignUpUserDto, LoginUserDto } from './dto/users.dto';
 import { JwtService } from '@nestjs/jwt';
 
@@ -41,6 +40,7 @@ export class UsersService {
     }
 
     // create the user
+    const saltRounds: number = 10;
     const salt = await bcrypt.genSalt(saltRounds);
     const hash = await bcrypt.hash(password, salt);
 

@@ -29,6 +29,7 @@
     "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "mongodb-memory-server": "^10.1.2",
     "mongoose": "^8.8.3",
     "morgan": "^1.10.0",
     "reflect-metadata": "^0.2.0",
@@ -52,7 +53,7 @@
     "prettier": "^3.0.0",
     "source-map-support": "^0.5.21",
     "supertest": "^7.0.0",
-    "ts-jest": "^29.1.0",
+    "ts-jest": "^29.2.5",
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
@@ -66,6 +67,7 @@
     ],
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
+    "preset": "ts-jest",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
@@ -73,6 +75,9 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/$1"
+    }
   }
 }

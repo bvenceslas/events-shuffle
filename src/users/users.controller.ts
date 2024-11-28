@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { LoginUserDto, SignUpUserDto } from './dto/users.dto';
 import { Public } from 'src/utils/public.guard';
+import { User } from './models/users.model';
 
 @Controller({
   path: 'users',
@@ -12,28 +13,34 @@ export class UsersController {
 
   @Public()
   @Post('/signup')
-  async signUp(@Body() signUpUserDto: SignUpUserDto) {
+  async signUp(
+    @Body() signUpUserDto: SignUpUserDto,
+  ): Promise<Omit<User, 'password'>> {
     return await this._userService.signUp(signUpUserDto);
   }
 
   @Public()
   @Post('/login')
-  async login(@Body() loginUserDto: LoginUserDto) {
+  async login(
+    @Body() loginUserDto: LoginUserDto,
+  ): Promise<{ accessToken: string }> {
     return await this._userService.login(loginUserDto);
   }
 
   @Get('/list')
-  async getAllUsers() {
+  async getAllUsers(): Promise<User[]> {
     return await this._userService.findAll();
   }
 
   @Get('/:id')
-  async getUserById(@Param('id') userId: string) {
+  async getUserById(@Param('id') userId: string): Promise<User | undefined> {
     return await this._userService.findOneById(userId);
   }
 
   @Get('/username/:username')
-  async getUserByUsername(@Param('username') username: string) {
+  async getUserByUsername(
+    @Param('username') username: string,
+  ): Promise<User | undefined> {
     return await this._userService.findOne(username);
   }
 }
