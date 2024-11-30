@@ -48,14 +48,16 @@ The API is secured with **JWT authentication** to ensure that users are authenti
      yarn
    ```
 
-3. Set up the environment variables: Create a .env file in the project root with the following content:
+3. Set up the environment variables: Create a `.env` file in the project root based on the provided `.env.example` file with the following content:
 
    ```
-   DATABASE_USER=shu_test_user_ffle
-   DATABASE_PASSWORD=hpbGf5KEFoo6AZhl
-   DATABASE_NAME=events-shuffle
-   JWT_SECRET=H@a!c$k%e^I&f*Y\o|u_C?a:n
+   DATABASE_USER=<your_database_user>
+   DATABASE_PASSWORD=<your_database_password>
+   DATABASE_NAME=<your_database_name>
+   JWT_SECRET=<your_jwt_secret>
    ```
+
+   **Note**: The actual values should be kept secret and not shared publicly.
 
 4. Run the app:
 
