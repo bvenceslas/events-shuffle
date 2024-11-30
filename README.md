@@ -48,7 +48,7 @@ The API is secured with **JWT authentication** to ensure that users are authenti
      yarn
    ```
 
-3. Set up the environment variables: Create a `.env` file in the project root based on the provided `.env.example` file with the following content:
+3. Set up the environment variables: Create a `.env` file in the project root based on the provided `ENV_EXAMPLE` file with the following content:
 
    ```
    DATABASE_USER=<your_database_user>
@@ -164,7 +164,7 @@ To test the API endpoints, you can use the provided Postman collection.
 ### Steps to Use the Postman Collection
 
 1. Download the Postman collection file:
-   - [Download Postman Collection](https://github.com/events-shuffle/Events-Shuffle.postman_collection.json)
+   - [Download Postman Collection](https://github.com/bvenceslas/events-shuffle/blob/main/Events-Shuffle.postman_collection.json)
 2. Open Postman and import the collection:
    - Go to **File** > **Import** > **Upload Files** and select the downloaded JSON file.
 3. Set up your environment variables:
