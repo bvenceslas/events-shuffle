@@ -5,7 +5,6 @@ import { JwtService } from '@nestjs/jwt';
 import { getModelToken } from '@nestjs/mongoose';
 import { User } from './models/users.model';
 import { SignUpUserDto, LoginUserDto } from './dto/users.dto';
-// import * as bcrypt from 'bcrypt';
 import { ConflictException } from '@nestjs/common';
 
 jest.mock('bcrypt', () => ({

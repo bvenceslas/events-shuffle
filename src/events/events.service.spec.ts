@@ -145,16 +145,16 @@ describe('EventsService', () => {
         .spyOn(eventsModel, 'findByIdAndUpdate')
         .mockResolvedValue(mockUpdatedEvent);
 
-      const eventId = new Types.ObjectId('507f1f77bcf86cd799439011'); // ObjectId to be used
+      const eventId = new Types.ObjectId('507f1f77bcf86cd799439011');
 
       const result = await service.update(eventId.toString(), {
         name: 'Updated Event',
         dates: [new Date('2024-12-25'), new Date('2024-12-26')],
       });
 
-      expect(service.findOneById).toHaveBeenCalledWith(eventId.toString()); // Convert ObjectId to string
+      expect(service.findOneById).toHaveBeenCalledWith(eventId.toString());
       expect(eventsModel.findByIdAndUpdate).toHaveBeenCalledWith(
-        eventId.toString(), // Convert ObjectId to string
+        eventId.toString(),
         {
           name: 'Updated Event',
           dates: [new Date('2024-12-25'), new Date('2024-12-26')],

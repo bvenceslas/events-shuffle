@@ -9,7 +9,7 @@ import {
 import { Model } from 'mongoose';
 import { User } from './models/users.model';
 import { InjectModel } from '@nestjs/mongoose';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { SignUpUserDto, LoginUserDto } from './dto/users.dto';
 import { JwtService } from '@nestjs/jwt';
 
@@ -88,14 +88,14 @@ export class UsersService {
   }
 
   async findOneById(userId: string): Promise<User | undefined> {
-    return await this._userModel.findById(userId).lean();
+    return await this._userModel.findById(userId, { password: 0 }).lean();
   }
 
   async findOne(username: string): Promise<User | undefined> {
-    return await this._userModel.findOne({ username });
+    return await this._userModel.findOne({ username }, { password: 0 });
   }
 
   async findAll(): Promise<User[]> {
-    return await this._userModel.find({});
+    return await this._userModel.find({}, { password: 0 });
   }
 }
