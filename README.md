@@ -1,99 +1,236 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Events Shuffle API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 1. Project Overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+A lightweight backend for scheduling events with friends. Features include creating events, adding votes, and finding dates suitable for all participants. Built with scalability in mind to accommodate future extensions.
 
-## Description
+### Built with
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Events Shuffle API is a scheduling backend built with **NestJS**, allowing users to create events, vote on proposed dates, and determine the most suitable date based on participants' preferences.
+The API is secured with **JWT authentication** to ensure that users are authenticated before accessing protected routes.
 
-## Project setup
+## Key Features
+
+- **JWT Authentication**: User authentication and authorization.
+- **User-Friendly Voting**: Automatically uses the username from the JWT token in creating events and voting.
+- **Robust Event Management**: Create, list, and determine suitable event dates based on votes.
+- **Scalable Design**: Built with modularity in mind for future enhancements.
+- **Containerized Deployment**: Docker support for consistent deployment environments.
+
+---
+
+## **Tech Stack**
+
+- **Framework**: [NestJS](https://nestjs.com/) (MVC architecture)
+- **Database**: MongoDB (hosted on MongoDB Atlas) with **Mongoose ODM**
+- **Testing**: Jest for integration and unit tests
+- **Documentation**: Postman (for API documentation and testing)
+- **Authentication**: JWT (JSON Web Token) with `AuthGuard` for route protection
+- **Package Manager**: Yarn
+- **Containerization**: Docker
+
+---
+
+## **Installation and Setup**
+
+### **Local Setup**
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/bvenceslas/events-shuffle.git
+   cd events-shuffle
+   ```
+
+2. Install dependencies
+
+   ```bash
+     yarn
+   ```
+
+3. Set up the environment variables: Create a `.env` file in the project root based on the provided `.env.example` file with the following content:
+
+   ```
+   DATABASE_USER=<your_database_user>
+   DATABASE_PASSWORD=<your_database_password>
+   DATABASE_NAME=<your_database_name>
+   JWT_SECRET=<your_jwt_secret>
+   ```
+
+   **Note**: The actual values should be kept secret and not shared publicly.
+
+4. Run the app:
+
+   ```bash
+   yarn start
+   ```
+
+### **Docker Setup**
+
+1. Ensure Docker is installed on your system.
+2. Clone the repository:
+
+   ```bash
+   git clone https://github.com/bvenceslas/events-shuffle.git
+   cd events-shuffle
+   ```
+
+3. Build and run the Docker container:
+   ```bash
+   yarn docker:build
+   yarn docker:run
+   ```
+
+---
+
+## Connecting to MongoDB
+
+The application uses a hosted MongoDB Atlas cluster. You can connect to it using MongoDB Compass or your preferred MongoDB client.
+
+**Connection String**:
+
+    mongodb+srv://shu_test_user_ffle:hpbGf5KEFoo6AZhl@braincluster.iyj68qh.mongodb.net/events-shuffle
+
+Once connected, browse the `events-shuffle` database to view the data.
+
+---
+
+## API Documentation and Testing
+
+Here is the [Documentation URL](https://documenter.getpostman.com/view/11414441/2sAYBYeVTi)
+
+Initially, we need to sign up a new user and then login using the same username and password used to sign up.
+When logging in, The returned token is saved in the **Postman Collection Variables** under the key `authToken` for subsequent API calls, and immediately included under Authorization of protected routes.
+
+Before creating new users, you can test the api using the seeding data.
+Here is the summary about seeding data:
+
+#### **Users**
+
+| Username   | Password     |
+| ---------- | ------------ |
+| brainkss   | H@kM3!fUK3n  |
+| chris      | S1RhChR1S    |
+| josh       | J!0@-\*&s#h  |
+| bvenceslas | $@L$3Cn3VB0  |
+| richard    | 20D_r@4C!R24 |
+
+#### **Events**
+
+| Event Name            | Dates                                                      |
+| --------------------- | ---------------------------------------------------------- |
+| December Marathon     | 2024-12-22, 2024-12-24, 2024-12-26, 2024-12-28, 2024-12-30 |
+| Meeting Evaluation    | 2024-12-05, 2024-12-15, 2024-12-25                         |
+| New Year Back to Work | 2025-01-02, 2025-01-05, 2025-01-07, 2025-01-09             |
+
+---
+
+#### **Voting Suggestions**
+
+##### **1. December Marathon** (ID: `67483f6ab8db44fa48859a7f`)
+
+| Username   | Voting Dates                       |
+| ---------- | ---------------------------------- |
+| brainkss   | 2024-12-22, 2024-12-26, 2024-12-30 |
+| chris      | 2024-12-22, 2024-12-24, 2024-12-26 |
+| josh       | 2024-12-24, 2024-12-26, 2024-12-30 |
+| bvenceslas | 2024-12-26, 2024-12-30             |
+| richard    | 2024-12-30                         |
+
+##### **2. Meeting Evaluation** (ID: `6748442782da917937f879be`)
+
+| Username   | Voting Dates                       |
+| ---------- | ---------------------------------- |
+| brainkss   | 2024-12-05                         |
+| chris      | 2024-12-15, 2024-12-25             |
+| josh       | 2024-12-15, 2024-12-25             |
+| bvenceslas | 2024-12-05                         |
+| richard    | 2024-12-05, 2024-12-15, 2024-12-25 |
+
+##### **3. New Year Back to Work** (ID: `6748447282da917937f879c5`)
+
+| Username   | Voting Dates           |
+| ---------- | ---------------------- |
+| brainkss   | 2025-01-05, 2025-01-09 |
+| chris      | 2025-01-09             |
+| josh       | 2025-01-09             |
+| bvenceslas | 2025-01-05, 2025-01-09 |
+| richard    | 2025-01-09             |
+
+## Postman Collection
+
+To test the API endpoints, you can use the provided Postman collection.
+
+### Steps to Use the Postman Collection
+
+1. Download the Postman collection file:
+   - [Download Postman Collection](https://github.com/events-shuffle/Events-Shuffle.postman_collection.json)
+2. Open Postman and import the collection:
+   - Go to **File** > **Import** > **Upload Files** and select the downloaded JSON file.
+3. Set up your environment variables:
+   - Ensure the `baseUrl` variable is set to your API's base URL (e.g., `http://localhost:3000`).
+   - The `Authorization` token will automatically be saved in the collection variables after logging in.
+
+Once imported, you can test all API endpoints easily.
+
+---
+
+## Testing
+
+To run the tests, use the following command:
 
 ```bash
-$ yarn install
+   yarn test
 ```
 
-## Compile and run the project
+**Test Coverage**:
 
-```bash
-# development
-$ yarn run start
+- Unit tests for event services and controllers.
+- Unit tests for user services and controllers.
 
-# watch mode
-$ yarn run start:dev
+---
 
-# production mode
-$ yarn run start:prod
-```
+## Design Choices
 
-## Run tests
+- Architecture: NestJS's default design (MVC).
+- Dependency Injection: For modularity and testability.
+- Data Validation: Leveraged `class-validator` for input validation.
+- Versioning: Implemented `NestJS URI versioning` for API endpoints (e.g., /api/v1/...).
 
-```bash
-# unit tests
-$ yarn run test
+---
 
-# e2e tests
-$ yarn run test:e2e
+## Future Improvements
 
-# test coverage
-$ yarn run test:cov
-```
+### Potential Improvements
 
-## Deployment
+1. **Voting Logic**:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+- Separate votes into its own resource (e.g., `/votes` endpoint) to improve scalability for large datasets.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+2. **Pagination for Event Listing**:
 
-```bash
-$ yarn install -g mau
-$ mau deploy
-```
+- Add query parameters like `?page` and `?limit` to /list for scalability.
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+3. **Improved Date Validation**:
 
-## Resources
+- Enhance error handling for invalid dates or overlapping votes.
 
-Check out a few resources that may come in handy when working with NestJS:
+4. Filtering and Querying:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+- Add query parameters for filtering events by name or date range.
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Closing Note
+
+Thank you for taking the time to review my solution! I'm happy to discuss my implementation, design decisions, and any areas of potential improvement during the interview.
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Author - [Josh Venceslas Burongu](https://x.com/bvenceslas)
+- GitHub - [bvenceslas](https://github.com/bvenceslas)
+- Linkedin - [Venceslas Burongu](https://linkedin.com/in/venceslas-burongu)
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is UNLICENSED.

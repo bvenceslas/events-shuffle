@@ -1,0 +1,640 @@
+{
+	"info": {
+		"_postman_id": "41fa34ec-6d28-4fa3-8794-d5385722a79d",
+		"name": "Events-Shuffle",
+		"description": "## Introduction\n\nWelcome to the **Events-shuffle** API documentation!\n\nThis API allows you to interact with the backend system to manage users, events, and voting activities. Whether you're a developer, tester, or system administrator, this guide will help you get started with testing the API endpoints using Postman.\n\n### Key Features:\n\n- **User Management**: Create new users, log in, and manage authentication.\n    \n- **Event Management**: Retrieve and interact with events, including event dates and related voting and results about the suitable dates for participants.\n    \n- **Protected Routes**: Access restricted endpoints with proper authentication using JSON Web Tokens (JWT).\n    \n\nTo begin testing the API, follow these steps:\n\nThis documentation provides the necessary information to test the API endpoints using Postman. You'll find example requests, expected responses, and guidelines on how to handle authentication, authorization, and data interaction.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11414441"
+	},
+	"item": [
+		{
+			"name": "Event",
+			"item": [
+				{
+					"name": "Get events",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/event/list",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"event",
+								"list"
+							]
+						},
+						"description": "**Description**: Fetch a list of all events.  \n**Endpoint**: `GET /api/v1/event/list`  \n**Authorization**: Not required.  \n**Response**: Returns an array of event objects.\n\n**Success** (Status: `200 OK`)\n\n``` json\n[\n    {\n        \"_id\": \"67483f6ab8db44fa48859a7f\",\n        \"name\": \"December Marathon\",\n        \"votes\": [\n            {\n                \"date\": \"2024-12-22T00:00:00.000Z\",\n                \"people\": [\n                    \"chris\"\n                ],\n                \"_id\": \"674871b440225bf2822b1762\"\n            },\n            {\n                \"date\": \"2024-12-24T00:00:00.000Z\",\n                \"people\": [\n                    \"chris\",\n                    \"josh\"\n                ],\n                \"_id\": \"674871b440225bf2822b1763\"\n            },\n            {\n                \"date\": \"2024-12-26T00:00:00.000Z\",\n                \"people\": [\n                    \"chris\",\n                    \"josh\",\n                    \"bvenceslas\"\n                ],\n                \"_id\": \"674871b440225bf2822b1764\"\n            },\n            {\n                \"date\": \"2024-12-30T00:00:00.000Z\",\n                \"people\": [\n                    \"josh\",\n                    \"bvenceslas\",\n                    \"richard\"\n                ],\n                \"_id\": \"674871fd40225bf2822b179f\"\n            }\n        ],\n        \"creator\": {\n            \"_id\": \"67483d1601d819c01c1b3eb9\",\n            \"username\": \"brainkss\"\n        }\n    },\n    {\n        \"_id\": \"6748442782da917937f879be\",\n        \"name\": \"Meeting Evaluation\",\n        \"votes\": [\n            {\n                \"date\": \"2024-12-05T00:00:00.000Z\",\n                \"people\": [\n                    \"brainkss\",\n                    \"bvenceslas\",\n                    \"richard\"\n                ],\n                \"_id\": \"674870d940225bf2822b1740\"\n            },\n            {\n                \"date\": \"2024-12-15T00:00:00.000Z\",\n                \"people\": [\n                    \"chris\",\n                    \"josh\",\n                    \"richard\"\n                ],\n                \"_id\": \"674871cd40225bf2822b1779\"\n            },\n            {\n                \"date\": \"2024-12-25T00:00:00.000Z\",\n                \"people\": [\n                    \"chris\",\n                    \"josh\",\n                    \"richard\"\n                ],\n                \"_id\": \"674871cd40225bf2822b177a\"\n            }\n        ],\n        \"creator\": {\n            \"_id\": \"674842f082da917937f879af\",\n            \"username\": \"chris\"\n        }\n    },\n    {\n        \"_id\": \"6748447282da917937f879c5\",\n        \"name\": \"New Year Back to Work\",\n        \"votes\": [\n            {\n                \"date\": \"2025-01-05T00:00:00.000Z\",\n                \"people\": [\n                    \"brainkss\",\n                    \"bvenceslas\"\n                ],\n                \"_id\": \"674870ec40225bf2822b174b\"\n            },\n            {\n                \"date\": \"2025-01-09T00:00:00.000Z\",\n                \"people\": [\n                    \"brainkss\",\n                    \"chris\",\n                    \"josh\",\n                    \"bvenceslas\",\n                    \"richard\"\n                ],\n                \"_id\": \"674870ec40225bf2822b174c\"\n            }\n        ],\n        \"creator\": {\n            \"_id\": \"6748435482da917937f879b2\",\n            \"username\": \"josh\"\n        }\n    }\n]\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get events from Docker",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/event/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"event",
+								"list"
+							]
+						},
+						"description": "As Docker was exposed on the same port, testing it wil be similar to the local request to get the list of events,\n\n**Description**: Fetch a list of all events from api running with Docker.  \n**Endpoint**: `GET /api/v1/event/list`  \n**Authorization**: Not required.  \n**Response**: Returns an array of event objects.\n\n**Success** (Status: `200 OK`)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get event by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/event/67483f6ab8db44fa48859a7f",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"event",
+								"67483f6ab8db44fa48859a7f"
+							]
+						},
+						"description": "**Description**: Fetch details of an event by its unique ID.  \n**Endpoint**: `GET /api/v1/event/:id`  \n**Path Parameters**:\n\n- `id`: Unique identifier of the event example `67483f6ab8db44fa48859a7f`  \n    **Authorization**: Not required.  \n    **Response**: Returns the event object for the specified ID.\n    \n\n**Success** (Status: `200 OK`)\n\n``` json\n{\n    \"_id\": \"67483f6ab8db44fa48859a7f\",\n    \"name\": \"December Marathon\",\n    \"dates\": [\n        \"2024-12-22T00:00:00.000Z\",\n        \"2024-12-24T00:00:00.000Z\",\n        \"2024-12-26T00:00:00.000Z\",\n        \"2024-12-28T00:00:00.000Z\",\n        \"2024-12-30T00:00:00.000Z\"\n    ],\n    \"votes\": [\n        {\n            \"date\": \"2024-12-22T00:00:00.000Z\",\n            \"people\": [\n                \"chris\"\n            ],\n            \"_id\": \"674871b440225bf2822b1762\"\n        },\n        {\n            \"date\": \"2024-12-24T00:00:00.000Z\",\n            \"people\": [\n                \"chris\",\n                \"josh\"\n            ],\n            \"_id\": \"674871b440225bf2822b1763\"\n        },\n        {\n            \"date\": \"2024-12-26T00:00:00.000Z\",\n            \"people\": [\n                \"chris\",\n                \"josh\",\n                \"bvenceslas\"\n            ],\n            \"_id\": \"674871b440225bf2822b1764\"\n        },\n        {\n            \"date\": \"2024-12-30T00:00:00.000Z\",\n            \"people\": [\n                \"josh\",\n                \"bvenceslas\",\n                \"richard\"\n            ],\n            \"_id\": \"674871fd40225bf2822b179f\"\n        }\n    ],\n    \"creator\": \"67483d1601d819c01c1b3eb9\",\n    \"__v\": 0\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Get event results",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/event/6748447282da917937f879c5/results",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"event",
+								"6748447282da917937f879c5",
+								"results"
+							]
+						},
+						"description": "**Description**: Retrieve the aggregated voting results for an event, including the most voted dates.\n\n- **Endpoint**: `GET /api/v1/event/:eventId/results`\n    \n- **Headers**:\n    \n    - `Authorization: Bearer {token}`\n        \n\n**Success** (Status: `200 OK`)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get event by name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/event/name/December Marathon",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"event",
+								"name",
+								"December Marathon"
+							]
+						},
+						"description": "**Description**: Fetch an event's details by its name.  \n**Endpoint**: `GET /api/v1/event/name/:name`  \n**Path Parameters**:\n\n- `name`: The name of the event.  \n    **Authorization**: Not required.  \n    **Response**: Returns the event object matching the given name.\n    \n\n**Success** (Status: `200 OK`)\n\n``` json\n{\n    \"_id\": \"67483f6ab8db44fa48859a7f\",\n    \"name\": \"December Marathon\",\n    \"dates\": [\n        \"2024-12-22T00:00:00.000Z\",\n        \"2024-12-24T00:00:00.000Z\",\n        \"2024-12-26T00:00:00.000Z\",\n        \"2024-12-28T00:00:00.000Z\",\n        \"2024-12-30T00:00:00.000Z\"\n    ],\n    \"votes\": [\n        {\n            \"date\": \"2024-12-22T00:00:00.000Z\",\n            \"people\": [\n                \"chris\"\n            ],\n            \"_id\": \"674871b440225bf2822b1762\"\n        },\n        {\n            \"date\": \"2024-12-24T00:00:00.000Z\",\n            \"people\": [\n                \"chris\",\n                \"josh\"\n            ],\n            \"_id\": \"674871b440225bf2822b1763\"\n        },\n        {\n            \"date\": \"2024-12-26T00:00:00.000Z\",\n            \"people\": [\n                \"chris\",\n                \"josh\",\n                \"bvenceslas\"\n            ],\n            \"_id\": \"674871b440225bf2822b1764\"\n        },\n        {\n            \"date\": \"2024-12-30T00:00:00.000Z\",\n            \"people\": [\n                \"josh\",\n                \"bvenceslas\",\n                \"richard\"\n            ],\n            \"_id\": \"674871fd40225bf2822b179f\"\n        }\n    ],\n    \"creator\": \"67483d1601d819c01c1b3eb9\",\n    \"__v\": 0\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Create event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Event Test\",\n    \"dates\": [\"2025-02-03\", \"2025-02-05\",\"2025-02-07\", \"2025-02-09\", \"2025-02-11\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/event/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"event",
+								""
+							]
+						},
+						"description": "Description: Create a new event.  \nEndpoint: GET /api/v1/event/  \nAuthorization: Required (JWT token).  \nResponse: Returns object with the event id.\n\nSuccess (Status: 201 CREATED):"
+					},
+					"response": []
+				},
+				{
+					"name": "Update event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful PUT request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    // \"name\": \"Hackathon November 1\",\n    \"dates\": [\"2024-11-10\", \"2024-11-15\",\"2024-11-20\", \"2024-11-25\", \"2024-11-30\"]\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/event/6745aef5451e16a8e0433f87",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"event",
+								"6745aef5451e16a8e0433f87"
+							]
+						},
+						"description": "**Description**: Update the details of an existing event.  \n**Endpoint**: `PUT /api/v1/event/:id`  \n**Path Parameters**:\n\n- `id`: Unique identifier of the event to be updated.  \n    **Authorization**: Required (JWT token).  \n    **Request Body**: JSON object with updated event details (e.g., name, dates).  \n    **Response**: Returns the updated event object.\n    \n\nSuccess (Status: 200 OK)"
+					},
+					"response": []
+				},
+				{
+					"name": "Vote for an event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful PUT request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    //// \"December Marathon\": \"67483f6ab8db44fa48859a7f\",\n    // brainkss -> \n    // \"votingDates\": [\"2024-12-22\", \"2024-12-26\", \"2024-12-30\"]\n\n\n    // chris -> \n    // \"votingDates\": [\"2024-12-22\", \"2024-12-24\", \"2024-12-26\"]\n\n\n    // josh -> \n    // \"votingDates\": [\"2024-12-24\", \"2024-12-26\", \"2024-12-30\"]\n\n\n    // bvenceslas -> \n    // \"votingDates\": [\"2024-12-26\", \"2024-12-30\"]\n\n\n    // richard -> \n    // \"votingDates\": [\"2024-12-30\"]\n\n    //// --------------------------------------------------------\n\n    ////\"Meeting Evaluation\": \"6748442782da917937f879be\",\n    // brainkss  -> \n    // \"votingDates\": [\"2024-12-05\"]\n\n\n    // chris -> \n    // \"votingDates\": [\"2024-12-15\", \"2024-12-25\"]\n\n\n    // josh -> \n    // \"votingDates\": [\"2024-12-15\", \"2024-12-25\"]\n\n\n    // bvenceslas -> \n    // \"votingDates\": [\"2024-12-05\"]\n\n\n    // richard -> \n    // \"votingDates\": [\"2024-12-05\", \"2024-12-15\", \"2024-12-25\"]\n\n    //// -----------------------------------\n\n    //// \"New Year Back to Work\": \"6748447282da917937f879c5\"\n    // brainkss  -> \n    // \"votingDates\": [\"2025-01-05\", \"2025-01-09\"]\n\n\n    // chris -> \n    // \"votingDates\": [\"2025-01-09\"]\n\n\n    // josh -> \n    // \"votingDates\": [\"2025-01-09\"]\n\n\n    // bvenceslas -> \n    // \"votingDates\": [\"2025-01-05\", \"2025-01-09\"]\n\n\n    // richard -> \n    \"votingDates\": [\"2025-02-03\"]\n        \n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/event/674b359cfbf071db748111bc/vote",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"event",
+								"674b359cfbf071db748111bc",
+								"vote"
+							]
+						},
+						"description": "**Description**: This endpoint allows a user to cast votes for specific dates associated with an event.\n\n- **Endpoint**: `PUT /api/v1/event/:eventId/vote`\n    \n- **Headers**:\n    \n    - `Authorization: Bearer {token}`\n        \n\nSuccess (Status: 200 OK)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get all users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/users/list",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"list"
+							]
+						},
+						"description": "**Description**: Fetch a list of all users.  \n**Endpoint**: `GET /api/v1/users/list`  \n**Authorization**: Required (JWT token).  \n**Response**: Returns an array of user objects.\n\nSuccess (Status: 200 OK)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/users/67483d1601d819c01c1b3eb9",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"67483d1601d819c01c1b3eb9"
+							]
+						},
+						"description": "**Description**: Fetch details of a user by their unique ID.  \n**Endpoint**: `GET /api/v1/users/:id`  \n**Path Parameters**:\n\n- `id`: Unique identifier of the user.  \n    **Authorization**: Required (JWT token).  \n    **Response**: Returns the user object for the specified ID.\n    \n\nSuccess (Status: 200 OK)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get users by username",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/users/username/bvenceslas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"username",
+								"bvenceslas"
+							]
+						},
+						"description": "**Description**: Fetch a user’s details by their username.  \n**Endpoint**: `GET /api/v1/user/username/:username`  \n**Path Parameters**:\n\n- `username`: The username of the user.  \n    **Authorization**: Required (JWT token).  \n    **Response**: Returns the user object matching the given username.\n    \n\nSuccess (Status: 200 OK):"
+					},
+					"response": []
+				},
+				{
+					"name": "signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"new-user\",\n    \"password\": \"$@D_r@4%)%*24\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/users/signup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"signup"
+							]
+						},
+						"description": "**Description**: Register a new user.  \n**Endpoint**: `POST /api/v1/users/signup`  \n**Authorization**: Not required.  \n**Request Body**:\n\nSuccess (Status: 201 CREATED)"
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Set Auth token\", function() {",
+									"    // get the response",
+									"    const response = pm.response.json();",
+									"    const token = response.accessToken;",
+									"",
+									"    if(token){",
+									"        pm.collectionVariables.set(\"authToken\", token);",
+									"        console.log(\"Saved Token Successfully\");",
+									"    } else {",
+									"        console.error(\"Token not found\");",
+									"    }",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"new-user\",\n    \"password\": \"$@D_r@4%)%*24\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/users/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						},
+						"description": "**Description**: Authenticate a user and obtain a JWT token.  \n**Endpoint**: `POST /api/v1/users/login`  \n**Authorization**: Not required.  \n**Request Body**:\n\nSuccess (Status: 200 OK)"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000"
+		},
+		{
+			"key": "authToken",
+			"value": ""
+		}
+	]
+}

@@ -17,7 +17,11 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "docker:build": "docker build -t events-shuffle .",
+    "docker:run": "docker run -p 3000:3000 --env-file .env events-shuffle",
+    "docker:run-detached": "docker run -d -p 3000:3000 --env-file .env events-shuffle",
+    "docker:stop": "docker stop $(docker ps -q --filter ancestor=events-shuffle)"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
